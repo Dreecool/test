@@ -4,64 +4,61 @@ import { useEffect, useState } from "react"
 
 Axios.defaults.withCredentials = true
 
+function setCookie(name, value, daysToExpire) {
+  const date = new Date();
+  date.setTime(date.getTime() + daysToExpire * 24 * 60 * 60 * 1000);
+  const expires = `expires=${date.toUTCString()}`;
+  document.cookie = `${name}=${value};${expires};path=/`;
+}
+
 const LoginComponents = () => {
-
- 
-
   const [emailLogin, setEmailLogin] = useState();
   const [passLogin, setPassLogin] = useState();
-  const [isAuthorized, setIsAuthorized] = useState()
- 
-
-  const Navigate = useNavigate()
+  const [isAuthorized, setIsAuthorized] = useState();
+  const Navigate = useNavigate();
 
   const loginInfo = {
-
     email_address: emailLogin,
-    password: passLogin
-
-  }
-
+    password: passLogin,
+  };
 
   const Submit = (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  Axios.post("https://test-wine-five-20.vercel.app/loginUser", loginInfo)
-    .then((response) => {
-      console.log(response);
+    Axios.post("https://test-wine-five-20.vercel.app/loginUser", loginInfo)
+      .then((response) => {
+        console.log(response);
 
-      // Include withCredentials: true in the GET request to /LoggedIn
-      Axios.get("https://test-wine-five-20.vercel.app/LoggedIn", {
-        withCredentials: true, // Send cookies with the request
-      })
-        .then((response) => {
-          console.log(response);
+        const token = response.data.toks;
+        setCookie("token", token, 1); // Set the 'token' cookie with a 1-day expiration
 
-          if (response.data.Message === "Authorized") {
-            setIsAuthorized(true);
-            console.log("authorized");
-          } else {
-            setIsAuthorized(false);
-            console.log("not authorized");
-          }
+        Axios.get("https://test-wine-five-20.vercel.app/LoggedIn", {
+          withCredentials: true,
         })
-        .catch((error) => {
-          console.log(error);
-        });
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-};
+          .then((response) => {
+            console.log(response);
 
+            if (response.data.Message === "Authorized") {
+              setIsAuthorized(true);
+              console.log("authorized");
+            } else {
+              setIsAuthorized(false);
+              console.log("not authorized");
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
-   if (isAuthorized) {
-
-      Navigate("/welcome"); 
-      return null; 
-      
-    }
-    
+  if (isAuthorized) {
+    Navigate("/welcome");
+    return null;
+  }
 
 
       
