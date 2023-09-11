@@ -17,7 +17,7 @@ const Register = require("./model/register");
 
 app.use(
   cors({
-    origin: ["https://test-pvg7.vercel.app/"],
+    origin: ["https://test-pvg7.vercel.app"],
     methods: ["POST", "GET", "DELETE", "PUT"],
     credentials: true,
   })
