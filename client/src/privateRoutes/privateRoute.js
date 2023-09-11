@@ -15,7 +15,7 @@ const PrivateRoutes = () => {
 
   useEffect(() => {
 
-    Axios.get("http://localhost:3001/LoggedIn").then((response) => {
+    Axios.get("https://test-wine-five-20.vercel.app/LoggedIn").then((response) => {
 
     console.log(response)
       
