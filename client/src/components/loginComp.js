@@ -26,12 +26,12 @@ const LoginComponents = () => {
    const Submit = (e) => {
     e.preventDefault()
 
-    Axios.post("http://localhost:3001/loginUser", loginInfo).then((response) => {
+    Axios.post("https://test-wine-five-20.vercel.app/loginUser", loginInfo).then((response) => {
 
 
 
       
-       Axios.get("http://localhost:3001/LoggedIn").then((response) => {
+       Axios.get("https://test-wine-five-20.vercel.app/LoggedIn").then((response) => {
 
        console.log(response)
 
