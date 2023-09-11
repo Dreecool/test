@@ -28,7 +28,7 @@ const LoginComponents = () => {
 
     Axios.post("https://test-wine-five-20.vercel.app/loginUser", loginInfo).then((response) => {
 
-
+  console.log(response)
 
       
        Axios.get("https://test-wine-five-20.vercel.app/LoggedIn").then((response) => {
