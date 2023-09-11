@@ -23,42 +23,36 @@ const LoginComponents = () => {
   }
 
 
-   const Submit = (e) => {
-    e.preventDefault()
+  const Submit = (e) => {
+  e.preventDefault();
 
-    Axios.post("https://test-wine-five-20.vercel.app/loginUser", loginInfo).then((response) => {
+  Axios.post("https://test-wine-five-20.vercel.app/loginUser", loginInfo)
+    .then((response) => {
+      console.log(response);
 
-  console.log(response)
+      // Include withCredentials: true in the GET request to /LoggedIn
+      Axios.get("https://test-wine-five-20.vercel.app/LoggedIn", {
+        withCredentials: true, // Send cookies with the request
+      })
+        .then((response) => {
+          console.log(response);
 
-      
-       Axios.get("https://test-wine-five-20.vercel.app/LoggedIn").then((response) => {
-
-       console.log(response)
-
-        if (response.data.Message === "Authorized") {
-
-           setIsAuthorized(true);
-           console.log("authorized")
-
+          if (response.data.Message === "Authorized") {
+            setIsAuthorized(true);
+            console.log("authorized");
           } else {
-
             setIsAuthorized(false);
-            console.log("not authorized")
-
+            console.log("not authorized");
           }
-
         })
-
-
-    
-      
-    }).catch((error) => {
-
-      console.log(error)
-
+        .catch((error) => {
+          console.log(error);
+        });
     })
-
-  }
+    .catch((error) => {
+      console.log(error);
+    });
+};
 
 
    if (isAuthorized) {
