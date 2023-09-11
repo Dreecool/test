@@ -4,36 +4,36 @@ import Axios from 'axios'
 
 Axios.defaults.withCredentials = true
 
+function setCookie(name, value, daysToExpire) {
+  const date = new Date();
+  date.setTime(date.getTime() + daysToExpire * 24 * 60 * 60 * 1000);
+  const expires = `expires=${date.toUTCString()}`;
+  document.cookie = `${name}=${value};${expires};path=/`;
+}
+
 const RegisterComponent = () => {
-
-
   const [fullName, setFullName] = useState();
   const [emailAddress, setEmailAddress] = useState();
   const [password, setPassword] = useState();
-  const [repPass, setRepPass] = useState()
+  const [repPass, setRepPass] = useState();
 
   const RegInfo = {
     full_name: fullName,
     email_address: emailAddress,
-    password: password
-  }
+    password: password,
+  };
 
   const RegisterUser = (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    Axios.post("https://test-wine-five-20.vercel.app/RegisterUser", RegInfo).then(() => {
-
-      console.log("Registered");
-
-    }).catch((error) => {
-
-      console.log(error);
-
-    })
-
-    console.log("s")
-
-  }
+    Axios.post("https://test-wine-five-20.vercel.app/RegisterUser", RegInfo)
+      .then(() => {
+        console.log("Registered");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   
 
   return (
